@@ -1,0 +1,4 @@
+interface:
+  display_name: "Extra Caffeine Workflow"
+  short_description: "Keep a Mac awake for authorized local AI work"
+  default_prompt: "Use $extra-caffeine-workflow to check whether my local task needs an awake session and help me choose its duration."

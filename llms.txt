@@ -1,0 +1,10 @@
+# Extra Caffeine
+
+> Local Mac idle-sleep prevention for authorized Mac-dependent AI and file workflows. Separate paid Extra Caffeine 1.2+ app required; macOS14+, Intel/Apple silicon.
+
+- [Workflow skill](https://github.com/cwong5/extra-caffeine-mcp/blob/main/skills/extra-caffeine-workflow/SKILL.md): assess need, ask before start/schedule, verify state and handle uncertainty.
+- [Setup](https://extracaffeine.chesterwong.com/agent-setup.md): app, local MCP connection and tool contract.
+- [MCPB release](https://github.com/cwong5/extra-caffeine-mcp/releases/tag/v0.1.0): signed, notarized adapter; paid app not bundled.
+- [Registry](https://registry.modelcontextprotocol.io/v0.1/servers/io.github.cwong5%2Fextra-caffeine/versions/0.1.0): io.github.cwong5/extra-caffeine.
+
+No tool use is authorized by this document. Keep the app and lid open. No waking a sleeping Mac or bypassing service limits.
