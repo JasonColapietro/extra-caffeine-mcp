@@ -6,7 +6,9 @@ profile="${1:?Usage: bash MCPB/notarize.sh KEYCHAIN_PROFILE}"
 out="$PWD/dist/mcpb"
 helper="$out/stage/server/extra-caffeine-adapter"
 codesign --verify --strict "$helper"
-codesign -dv "$helper" 2>&1 | rg 'Authority=Developer ID Application: Chester Wong Consulting Ltd|flags=.*runtime'
+codesign -dvvv "$helper" 2> "$out/signing.txt"
+rg -q 'Authority=Developer ID Application: Chester Wong Consulting Ltd \(3GPMM2KM4R\)' "$out/signing.txt"
+rg -q 'flags=.*runtime' "$out/signing.txt"
 /usr/bin/ditto -c -k --keepParent "$helper" "$out/notarization.zip"
 xcrun notarytool submit "$out/notarization.zip" --keychain-profile "$profile" --wait --output-format json > "$out/notarization.json"
 python3 - "$out/notarization.json" <<'PY'
@@ -16,8 +18,8 @@ print(json.dumps(receipt, indent=2))
 if receipt.get('status') != 'Accepted':
     raise SystemExit('Notarization not accepted; do not publish.')
 PY
-# A raw executable cannot carry a stapled ticket. Verify Apple's online ticket.
-spctl --assess --type execute --verbose=4 "$helper" 2> "$out/gatekeeper.txt"
-cat "$out/gatekeeper.txt"
+# A raw executable cannot carry a stapled ticket; use Apple's code requirement.
+codesign --verify --strict --all-architectures -R=notarized --check-notarization --verbose=4 "$helper" 2> "$out/notarization-check.txt"
+cat "$out/notarization-check.txt"
 # Notarization does not change helper bytes. Never rebuild/re-sign after submission.
 (cd "$out" && shasum -a 256 -c SHA256SUMS)

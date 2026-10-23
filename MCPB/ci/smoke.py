@@ -27,4 +27,5 @@ with tempfile.TemporaryDirectory(prefix='extra-caffeine-release-') as tmp:
     gatekeeper = subprocess.run(['spctl', '--assess', '--type', 'execute', '--verbose=4', str(helper)], capture_output=True, text=True)
     print(json.dumps({'architecture': platform.machine(), 'native_execution': 'passed', 'signature': 'passed', 'gatekeeper_exit': gatekeeper.returncode, 'gatekeeper_output': gatekeeper.stderr}, indent=2))
     if os.environ.get('REQUIRE_NOTARIZED') == 'true':
-        assert gatekeeper.returncode == 0, 'Gatekeeper rejected release artifact'
+        subprocess.run(['codesign', '--verify', '--strict', '--all-architectures', '-R=notarized', '--check-notarization', '--verbose=4', str(helper)], check=True)
+        print('PASS: Apple notarized requirement satisfied for all architectures')
