@@ -5,10 +5,9 @@ on:
       require_notarized:
         description: Require Apple Gatekeeper acceptance
         type: boolean
-        default: false
+        default: true
 permissions:
-  # GitHub requires write access to read a draft release. No repository secrets.
-  contents: write
+  contents: read
 jobs:
   native:
     strategy:
