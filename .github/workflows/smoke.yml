@@ -7,7 +7,8 @@ on:
         type: boolean
         default: false
 permissions:
-  contents: read
+  # GitHub requires write access to read a draft release. No repository secrets.
+  contents: write
 jobs:
   native:
     strategy:
