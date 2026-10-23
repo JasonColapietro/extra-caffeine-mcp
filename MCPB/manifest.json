@@ -1,0 +1,32 @@
+{
+  "manifest_version": "0.3",
+  "name": "extra-caffeine",
+  "display_name": "Extra Caffeine",
+  "version": "0.1.0",
+  "description": "Control idle-sleep prevention in a separately installed Extra Caffeine Mac app.",
+  "long_description": "Requires Extra Caffeine 1.2+ (a separate paid purchase), macOS 14+, and a local MCPB-compatible client. Open the selected app and enable AI assistants before controlling it. The adapter verifies the installed app's vendor signature and delegates stdio to that edition's MCP server. Closed-app/disabled-access state is reported as tool errors; discovery alone does not mean control is ready. Ask the user before starting or scheduling. The app must stay open and cannot wake a sleeping Mac. No automatic install, access enablement, or remote Mac control.",
+  "author": {"name": "Chester Wong Consulting Ltd", "url": "https://chesterwong.com/"},
+  "homepage": "https://extracaffeine.chesterwong.com/",
+  "documentation": "https://extracaffeine.chesterwong.com/agent-setup.md",
+  "support": "https://extracaffeine.chesterwong.com/support.html",
+  "server": {
+    "type": "binary",
+    "entry_point": "server/extra-caffeine-adapter",
+    "mcp_config": {
+      "command": "${__dirname}/server/extra-caffeine-adapter",
+      "args": ["--app", "${user_config.app_path}"]
+    }
+  },
+  "compatibility": {"platforms": ["darwin"]},
+  "user_config": {
+    "app_path": {
+      "type": "directory",
+      "title": "Installed Extra Caffeine app",
+      "description": "Choose the separately installed Extra Caffeine.app or Extra Caffeine Direct.app (version 1.2+). Open that edition and enable AI assistants before connecting.",
+      "required": true,
+      "default": "/Applications/Extra Caffeine Direct.app"
+    }
+  },
+  "tools_generated": true,
+  "keywords": ["macos", "keep-awake", "idle-sleep", "local-ai"]
+}

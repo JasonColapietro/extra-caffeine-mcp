@@ -1,0 +1,30 @@
+name: Release smoke tests
+on:
+  workflow_dispatch:
+    inputs:
+      require_notarized:
+        description: Require Apple Gatekeeper acceptance
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download v0.1.0 --repo cwong5/extra-caffeine-mcp --pattern '*.mcpb' --pattern SHA256SUMS --dir dist/mcpb
+      - name: Verify archive checksum
+        working-directory: dist/mcpb
+        run: shasum -a 256 -c SHA256SUMS
+      - name: Run native release tests
+        env:
+          REQUIRE_NOTARIZED: ${{ inputs.require_notarized }}
+        run: python3 MCPB/ci/smoke.py
