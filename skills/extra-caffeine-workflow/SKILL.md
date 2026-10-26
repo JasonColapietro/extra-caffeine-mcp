@@ -1,11 +1,19 @@
 ---
 name: extra-caffeine-workflow
-description: Use Extra Caffeine to keep a local Mac awake for long AI or file-processing work, check awake state, or manage requested one-time schedules. Applies to Mac-dependent tasks and explicit Extra Caffeine requests; cloud-only jobs usually do not need it.
+description: >-
+  Use when local AI or file-processing work needs a Mac to stay awake, or the user
+  asks to check awake state or manage a one-time Extra Caffeine schedule. Example:
+  "keep my Mac awake for two hours". Not for cloud-only jobs or waking a sleeping
+  Mac. Obtain authorization for duration and display choice before changing state.
+compatibility: >-
+  Requires macOS 14+, the separately purchased Extra Caffeine 1.2+ app kept open
+  with AI assistants enabled by the user, and a trusted local MCP client configured
+  with the running app edition's copied settings. No hosted endpoint or API key.
 ---
 
 # Extra Caffeine workflow
 
-Use the connected Extra Caffeine MCP tools. Do not simulate keystrokes, alter system power settings or substitute a different product. This skill supplies workflow guidance, not permission to change the user's Mac.
+Use the connected Extra Caffeine MCP server tools. Do not simulate keystrokes, alter system power settings or substitute a different product. This skill supplies workflow guidance, not permission to change the user's Mac.
 
 ## Connect and assess
 
